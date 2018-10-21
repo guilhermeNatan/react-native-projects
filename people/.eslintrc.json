@@ -1,0 +1,84 @@
+{
+  "extends": [
+    "airbnb",
+    "plugin:flowtype/recommended"
+  ],
+  "globals": {
+    "basePath": true,
+    "baseUrlRest": true,
+    "contexto": true,
+    "document": true,
+    "global": true,
+    "URLSearchParams": true,
+    "Event": true,
+    "navigator":true,
+    "muiTheme": true,
+    "oldBasePath": true,
+    "reactKomposer": true,
+    "window": true,
+    "baseUrlServico": true
+  },
+  "plugins": [
+    "react",
+    "jsx-a11y",
+    "import",
+    "flowtype"
+  ],
+  "root": true,
+  "rules": {
+    "brace-style": ["error", "stroustrup"],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "import/extensions": "off",
+    "import/no-absolute-path": "off",
+    "import/no-extraneous-dependencies": "warn",
+    "import/no-unresolved": [
+      "error",
+      {
+        // Ignore a verificação a partir de caminhos /imports/
+        "ignore":
+        [
+          "\/(imports)\/.*",
+          "meteor/"
+        ]
+      }
+    ],
+    "import/prefer-default-export": "off",
+    "linebreak-style": "off",
+    "no-plusplus": "off",
+    // disallow certain syntax forms
+    // http://eslint.org/docs/rules/no-restricted-syntax
+    "no-restricted-syntax": [
+      "error",
+      {
+        "selector": "ForInStatement",
+        "message": "for..in loops iterate over the entire prototype chain, which is virtually never what you want. Use Object.{keys,values,entries}, and iterate over the resulting array."
+      },
+      {
+        "selector": "LabeledStatement",
+        "message": "Labels are a form of GOTO; using them makes code confusing and hard to maintain and understand."
+      },
+      {
+        "selector": "WithStatement",
+        "message": "`with` is disallowed in strict mode because it makes code impossible to predict and optimize."
+      }
+    ],
+    "no-underscore-dangle": ["error", {
+      // Necessário permitir a variável abaixo para utilizar redux dev tools no chrome
+      "allow": ["__REDUX_DEVTOOLS_EXTENSION__"],
+      "allowAfterThis": true
+    }],
+    "no-unused-expressions": [
+      "error",
+      {
+        // allowShortCircuit set to true will allow you to use short circuit evaluations in your
+        // example: a && b()
+        "allowShortCircuit": true
+      }
+    ],
+    "react/prop-types": "off",
+    "react/require-default-props": "warn"
+  },
+  "settings": {
+
+  }
+}

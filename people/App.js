@@ -1,21 +1,39 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { createStackNavigator } from 'react-navigation';
+import { capitalizeFirstLatter } from './src/util';
+import PeoplePage from './src/pages/PeoplePage';
+import PeopleDetailPage from './src/pages/PeopleDetailPage';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
-    );
-  }
-}
+export default createStackNavigator({
+  Main: {
+    screen: PeoplePage,
+  },
+  PeopleDetail: {
+    screen: PeopleDetailPage,
+    navigationOptions: ({ navigation }) => (
+      {
+        title: capitalizeFirstLatter(navigation.state.params.pessoa.name.first),
+        headerTitleStyle: {
+          color: 'white',
+          fontSize: 30,
+        },
+      }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    ),
+  },
+},
+{
+  navigationOptions: {
+    title: 'Pessoas!',
+    headerTintColor: 'white',
+    headerStyle: {
+      backgroundColor: '#6ca2f7',
+      borderBottomWidth: 1,
+      borderBottomColor: '#6ca2f7',
+    },
+    headerTitleStyle: {
+      color: 'white',
+      fontSize: 30,
+      alignSelf: 'center',
+    },
   },
 });
