@@ -1,0 +1,7 @@
+src/main/js/imports/api/util/**/*
+src/main/js/imports/ui/componentes/util/**/*
+src/main/js/**/*.scss
+src/main/js/**/*.css
+src/main/js/**/*.txt
+src/main/js/**/*.md
+src/index.css
