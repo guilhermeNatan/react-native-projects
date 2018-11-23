@@ -1,11 +1,13 @@
 import React from 'react';
 import {
   View, Button, TextInput, Text, StyleSheet, ActivityIndicator,
-  Alert,
 } from 'react-native';
 
 import firebase from 'firebase';
+import { connect } from 'react-redux';
 import FormRow from '../components/FormRow';
+import { tryLogin } from '../actions';
+
 
 const styles = StyleSheet.create({
   container: {
@@ -20,7 +22,7 @@ const styles = StyleSheet.create({
 });
 
 
-export default class LoginPage extends React.Component {
+class LoginPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -40,7 +42,9 @@ export default class LoginPage extends React.Component {
       storageBucket: 'series-adbf9.appspot.com',
       messagingSenderId: '292164404638',
     };
-    firebase.initializeApp(config);
+    if (!firebase.apps.length) {
+      firebase.initializeApp(config);
+    }
   }
 
 onChangeHandler = (field, value) => {
@@ -49,51 +53,25 @@ onChangeHandler = (field, value) => {
 
 
 tryLogin = () => {
-  const { mail, password } = this.state;
+  const { mail: email, password } = this.state;
   this.setState({ isLoading: true, message: '' });
-
-  const loginUserSucess = (user) => {
-    this.setState({ message: 'Sucesso!' });
-  };
-
-  const loginUserFailed = (error) => {
-    this.setState({ message: this.getMessageByErroCode(err.code) });
-  };
-
-  firebase
-    .auth()
-    .signInWithEmailAndPassword(mail, password)
-    .then(loginUserSucess)
-    .catch((error) => {
-      if (error.code === 'auth/user-not-found') {
-        Alert
-          .alert('Usuário não encontrado',
-            'Deseja criar uma cadastro com as informações inseridas',
-            [{
-              text: 'Não',
-              onPress: () => {
-                console.log('usuário não quer criar conta');
-              },
-              style: 'cancel', // IOS
-            },
-            {
-              text: 'Sim',
-              onPress: () => {
-                firebase
-                  .auth()
-                  .createUserWithEmailAndPassword(mail, password)
-                  .then(loginUserSucess)
-                  .catch(loginUserFailed);
-              },
-            }],
-            { cancelable: false });
+  this.props.tryLogin({ email, password })
+    .then((user) => {
+      if(user){
+        // Toto aqui deve navegar para a pagina main
+          return this.props.navigation.replace('Main');
       }
-      else {
-        loginUserFailed(error);
-      }
+      this.setState({
+        isLoading: false,
+        message: ''
+      })
+
     })
-    .then((value) => {
-      this.setState({ isLoading: false });
+    .catch((error) => {
+      this.setState({
+        isLoading: false,
+        message: this.getMessageByErroCode(error.code)
+      });
     });
 }
 
@@ -163,3 +141,5 @@ render() {
   );
 }
 }
+
+export default connect(null, { tryLogin })(LoginPage);

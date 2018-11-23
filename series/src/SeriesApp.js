@@ -1,11 +1,15 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import devToolsEnhancer from 'remote-redux-devtools';
+import { createStore, applyMiddleware } from 'redux';
+import reduxThunk from 'redux-thunk';
+import { composeWithDevTools } from 'remote-redux-devtools';
 import rootReducer from './reducers';
 import Router from './Router';
 
-const store = createStore(rootReducer, devToolsEnhancer());
+// applyMiddleware : usado para combinar varios applyMiddlewares
+const store = createStore(rootReducer, composeWithDevTools(
+  applyMiddleware(reduxThunk),
+));
 
 
 const SeriesApp = prop => (

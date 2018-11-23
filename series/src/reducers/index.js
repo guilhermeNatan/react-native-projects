@@ -1,5 +1,10 @@
 import { combineReducers } from 'redux';
+import userReducer from './userReducer';
+import serieFormReducer from './serieFormReducer';
+import seriesReducer  from './seriesReducer';
 
 export default combineReducers({
-  qualquer: (state = [], action) => state,
+  user: userReducer,
+  serieForm: serieFormReducer,
+  series: seriesReducer, 
 });
