@@ -16,4 +16,4 @@ redux-thunk para actions assincronas
 Exemplo de formulário com react-redux
 
 ## people
-Exemplo mais básico de aplicação react sem utilizar redux 
+Exemplo básico de aplicação react sem utilizar redux 
